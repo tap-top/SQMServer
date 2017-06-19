@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="connection.url">jdbc:mysql://localhost:3306/shiqianmidb</property>
+        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+        <mapping class="com.tww.entity.Address"/>
+        <mapping resource="com/tww/entity/Address.hbm.xml"/>
+        <mapping class="com.tww.entity.User"/>
+        <mapping resource="com/tww/entity/User.hbm.xml"/>
+        <mapping class="com.tww.entity.Orderinfo"/>
+        <mapping resource="com/tww/entity/Orderinfo.hbm.xml"/>
+        <mapping resource="com/tww/entity/Notice.hbm.xml"/>
+        <mapping class="com.tww.entity.Notice"/>
+        <mapping resource="com/tww/entity/Seller.hbm.xml"/>
+        <mapping class="com.tww.entity.Seller"/>
+        <mapping resource="com/tww/entity/Goods.hbm.xml"/>
+        <mapping class="com.tww.entity.Goods"/>
+        <mapping class="com.tww.entity.Comment"/>
+        <mapping resource="com/tww/entity/Comment.hbm.xml"/>
+    </session-factory>
+</hibernate-configuration>

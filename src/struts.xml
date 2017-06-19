@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+    <constant name="struts.devMode" value="true"/>
+    <constant name="struts.enable.DynamicMethodInvocation" value="true"/>
+
+    <package name="default" extends="json-default">
+        <action name="user*" class="userAction" method="{1}">
+            <result name="success" type="json">
+                <param name="root">execute</param>
+            </result>
+            <allowed-methods>Login,Add,UpdateInfo,FindByID</allowed-methods>
+        </action>
+        <action name="address*" class="addressAction" method="{1}">
+            <result name="success" type="json">
+                <param name="root">execute</param>
+            </result>
+            <allowed-methods>Add,FindAddress,Delete,UpdateInfo</allowed-methods>
+        </action>
+        <action name="order*" class="orderAction" method="{1}">
+            <result name="success" type="json">
+                <param name="root">execute</param>
+            </result>
+            <allowed-methods>Add,FindOrderBySellerID,FindOrderByUserID,FindOrderByID,Update,FindOrderByIsAssessed,Delete</allowed-methods>
+        </action>
+        <action name="notice*" class="noticeAction" method="{1}">
+            <result name="success" type="json">
+                <param name="root">execute</param>
+            </result>
+            <allowed-methods>Add,FindNotice,Delete,</allowed-methods>
+        </action>
+
+        <action name="seller*" class="sellerAction" method="{1}">
+            <result name="success" type="json">
+                <param name="root">execute</param>
+            </result>
+            <allowed-methods>Add,FindAll,Login,FindSellerById,Update</allowed-methods>
+        </action>
+
+        <action name="goods*" class="goodsAction" method="{1}">
+            <result name="success" type="json">
+                <param name="root">execute</param>
+            </result>
+            <allowed-methods>Add,FindAll,Update,Delete,ZanUpdate,SelledUpdate</allowed-methods>
+        </action>
+
+        <action name="comment*" class="commentAction" method="{1}">
+            <result name="success" type="json">
+                <param name="root">execute</param>
+            </result>
+            <allowed-methods>Add,FindCommentBySellerID,FindCommentByUserID</allowed-methods>
+        </action>
+    </package>
+</struts>

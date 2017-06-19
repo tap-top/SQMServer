@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.tww.entity.Orderinfo" table="orderinfo" schema="shiqianmidb">
+        <id name="id" column="id"/>
+        <property name="userId" column="userID"/>
+        <property name="title" column="title"/>
+        <property name="logo" column="logo"/>
+        <property name="state" column="state"/>
+        <property name="info" column="info"/>
+        <property name="assessed" column="assessed"/>
+        <property name="sellerId" column="sellerID"/>
+        <property name="allcount" column="allcount"/>
+        <property name="allprice" column="allprice"/>
+        <property name="sellerPhone" column="sellerPhone"/>
+        <property name="dispatchPrice" column="dispatchPrice"/>
+        <property name="address" column="address"/>
+        <property name="time" column="time"/>
+    </class>
+</hibernate-mapping>

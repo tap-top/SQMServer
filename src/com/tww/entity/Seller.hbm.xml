@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.tww.entity.Seller" table="seller" schema="shiqianmidb">
+        <id name="sellerId" column="sellerID"/>
+        <property name="brand" column="brand"/>
+        <property name="sellerName" column="sellerName"/>
+        <property name="stars" column="stars"/>
+        <property name="monthSelled" column="monthSelled"/>
+        <property name="sellerTime" column="sellerTime"/>
+        <property name="distance" column="distance"/>
+        <property name="startPrice" column="startPrice"/>
+        <property name="dispatchPrice" column="dispatchPrice"/>
+        <property name="perCaptitaPrice" column="perCaptitaPrice"/>
+        <property name="sellerPhone" column="sellerPhone"/>
+        <property name="sellerAddress" column="sellerAddress"/>
+        <property name="sellerPassword" column="sellerPassword"/>
+    </class>
+</hibernate-mapping>
