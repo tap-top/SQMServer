@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+        <property name="driverClassName">
+            <value>com.mysql.jdbc.Driver</value>
+        </property>
+        <property name="url">
+            <value>jdbc:mysql://localhost:3306/shiqianmidb</value>
+        </property>
+        <property name="username">
+            <value>root</value>
+        </property>
+        <property name="password">
+            <value>12345</value>
+        </property>
+    </bean>
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mappingResources">
+            <!--需要添加对应的文件-->
+            <list>
+                <value>com/tww/entity/User.hbm.xml</value>
+                <value>com/tww/entity/Address.hbm.xml</value>
+                <value>com/tww/entity/Orderinfo.hbm.xml</value>
+                <value>com/tww/entity/Notice.hbm.xml</value>
+                <value>com/tww/entity/Seller.hbm.xml</value>
+                <value>com/tww/entity/Goods.hbm.xml</value>
+                <value>com/tww/entity/Comment.hbm.xml</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">
+                    org.hibernate.dialect.MySQLDialect
+                </prop>
+                <prop key="hibernate.show_sql">true</prop>
+            </props>
+        </property>
+    </bean>
+    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <!-- 以上是基本配置 -->
+
+    <bean id="userDao" class="com.tww.dao.impl.UserDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="userServiceTarget" class="com.tww.service.impl.UserServiceImpl">
+        <property name="userDao" ref="userDao"/>
+    </bean>
+
+    <bean id="userService"
+          class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+
+        <property name="target" ref="userServiceTarget"/>
+        <property name="transactionManager" ref="transactionManager"/>
+
+        <property name="transactionAttributes">
+            <props>
+                <prop key="find*">PROPAGATION_REQUIRED,readOnly</prop>
+                <prop key="*">PROPAGATION_REQUIRED</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="userAction" class="com.tww.action.UserAction"
+          scope="prototype" lazy-init="default">
+        <property name="userService" ref="userService"/>
+    </bean>
+    <!--以上是用户的配置-->
+
+    <bean id="addressDao" class="com.tww.dao.impl.AddressDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="addressServiceTarget" class="com.tww.service.impl.AddressServiceImpl">
+        <property name="addressDao" ref="addressDao"/>
+    </bean>
+
+    <bean id="addressService"
+          class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+
+        <property name="target" ref="addressServiceTarget"/>
+        <property name="transactionManager" ref="transactionManager"/>
+
+        <property name="transactionAttributes">
+            <props>
+                <prop key="find*">PROPAGATION_REQUIRED,readOnly</prop>
+                <prop key="*">PROPAGATION_REQUIRED</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="addressAction" class="com.tww.action.AddressAction"
+          scope="prototype" lazy-init="default">
+        <property name="AddressService" ref="addressService"/>
+    </bean>
+    <!--以上是地址的配置-->
+
+    <bean id="orderDao" class="com.tww.dao.impl.OrderDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="orderServiceTarget" class="com.tww.service.impl.OrderServiceImpl">
+        <property name="orderDao" ref="orderDao"/>
+    </bean>
+
+    <bean id="orderService"
+          class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+        <property name="target" ref="orderServiceTarget"/>
+        <property name="transactionManager" ref="transactionManager"/>
+
+        <property name="transactionAttributes">
+            <props>
+                <prop key="find*">PROPAGATION_REQUIRED,readOnly</prop>
+                <prop key="*">PROPAGATION_REQUIRED</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="orderAction" class="com.tww.action.OrderAction"
+        scope="prototype" lazy-init="default">
+        <property name="OrderService" ref="orderService"/>
+    </bean>
+    <!--以上是订单的配置-->
+
+    <bean id="noticeDao" class="com.tww.dao.impl.NoticeDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="noticeServiceTarget" class="com.tww.service.impl.NoticeServiceImpl">
+        <property name="noticeDao" ref="noticeDao"/>
+    </bean>
+
+    <bean id="noticeService"
+          class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+        <property name="target" ref="noticeServiceTarget"/>
+        <property name="transactionManager" ref="transactionManager"/>
+
+        <property name="transactionAttributes">
+            <props>
+                <prop key="find*">PROPAGATION_REQUIRED,readOnly</prop>
+                <prop key="*">PROPAGATION_REQUIRED</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="noticeAction" class="com.tww.action.NoticeAction"
+          scope="prototype" lazy-init="default">
+        <property name="NoticeService" ref="noticeService"/>
+    </bean>
+    <!--以上是通知的配置-->
+
+    <bean id="sellerDao" class="com.tww.dao.impl.SellerDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="sellerServiceTarget" class="com.tww.service.impl.SellerServiceImpl">
+        <property name="sellerDao" ref="sellerDao"/>
+    </bean>
+
+    <bean id="sellerService"
+          class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+        <property name="target" ref="sellerServiceTarget"/>
+        <property name="transactionManager" ref="transactionManager"/>
+
+        <property name="transactionAttributes">
+            <props>
+                <prop key="find*">PROPAGATION_REQUIRED,readOnly</prop>
+                <prop key="*">PROPAGATION_REQUIRED</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="sellerAction" class="com.tww.action.SellerAction"
+          scope="prototype" lazy-init="default">
+        <property name="SellerService" ref="sellerService"/>
+    </bean>
+    <!--以上是商家的配置-->
+
+    <bean id="goodsDao" class="com.tww.dao.impl.GoodsDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="goodsServiceTarget" class="com.tww.service.impl.GoodsServiceImpl">
+        <property name="goodsDao" ref="goodsDao"/>
+    </bean>
+
+    <bean id="goodsService"
+          class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+        <property name="target" ref="goodsServiceTarget"/>
+        <property name="transactionManager" ref="transactionManager"/>
+
+        <property name="transactionAttributes">
+            <props>
+                <prop key="find*">PROPAGATION_REQUIRED,readOnly</prop>
+                <prop key="*">PROPAGATION_REQUIRED</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="goodsAction" class="com.tww.action.GoodsAction"
+          scope="prototype" lazy-init="default">
+        <property name="GoodsService" ref="goodsService"/>
+    </bean>
+    <!--以上是商品的配置-->
+
+    <bean id="commentDao" class="com.tww.dao.impl.CommentDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="commentServiceTarget" class="com.tww.service.impl.CommentServiceImpl">
+        <property name="commentDao" ref="commentDao"/>
+    </bean>
+
+    <bean id="commentService"
+          class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+        <property name="target" ref="commentServiceTarget"/>
+        <property name="transactionManager" ref="transactionManager"/>
+
+        <property name="transactionAttributes">
+            <props>
+                <prop key="find*">PROPAGATION_REQUIRED,readOnly</prop>
+                <prop key="*">PROPAGATION_REQUIRED</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="commentAction" class="com.tww.action.CommentAction"
+          scope="prototype" lazy-init="default">
+        <property name="commentService" ref="commentService"/>
+        <property name="SellerService" ref="sellerService"/>
+    </bean>
+    <!--以上是评论的配置-->
+
+</beans>
